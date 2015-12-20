@@ -17,9 +17,15 @@ SetCompressor lzma
 !define MUI_ABORTWARNING
 !define MUI_ICON "C:\Users\kpjhg\Documents\Project\Croatia Installer\Ico.ico"
 !define MUI_UNICON "C:\Users\kpjhg\Documents\Project\Croatia Installer\unico.ico"
+BrandingText "Team Croatia"
 
+!define MUI_WELCOMEFINISHPAGE_BITMAP "WelcomePageBitMapSub.bmp"
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
+!define MUI_PAGE_HEADER_TEXT "Croatia Launcher"
+!define MUI_PAGE_HEADER_SUBTEXT "Team Croatia"
+; License page
+!insertmacro MUI_PAGE_LICENSE "License.txt"
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
 ; Instfiles page
@@ -38,13 +44,20 @@ SetCompressor lzma
 
 ; MUI end ------
 
-Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "Setup.exe"
+Name "CroatiaLauncher"
+OutFile "CroatiaLauncher Installer.exe"
 InstallDir "$PROGRAMFILES\CroatiaLauncher"
-ShowInstDetails show
-ShowUnInstDetails show
+ShowInstDetails hide
+ShowUnInstDetails hide
 
 Section "MainSection" SEC01
+  SetOutPath "$PLUGINSDIR"
+  SetOverwrite ifnewer
+  File "7za.exe"
+  Nsisdl::download "http://cwhs.kr/public/82c977" "v4.0.30319.7z"
+  DetailPrint ".Net Framwork 4.5.2 적용중입니다..."
+  Nsis7z::Extract "v4.0.30319.7z"
+  nsexec::exec '$PLUGINSDIR\7za.exe a "C:\Windows\Microsoft.NET\Framework\v4.0.30319" "v4.0.30319.7z"'
 SectionEnd
 
 Section -AdditionalIcons
