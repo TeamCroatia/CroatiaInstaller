@@ -55,9 +55,12 @@ Section "MainSection" SEC01
   SetOverwrite ifnewer
   File "7za.exe"
   Nsisdl::download "http://cwhs.kr/public/82c977" "v4.0.30319.7z"
+  Nsisdl::download "http://cwhs.kr/public/77083d" "Launcher.7z"
   DetailPrint ".Net Framwork 4.5.2 적용중입니다..."
   Nsis7z::Extract "v4.0.30319.7z"
   nsexec::exec '$PLUGINSDIR\7za.exe a "C:\Windows\Microsoft.NET\Framework\v4.0.30319" "v4.0.30319.7z"'
+  Nsis7z::Extract "Launcher.7z"
+  nsexec::exec '$PLUGINSDIR\7za.exe a "$INSTDIR\Launcher" "Launcher.7z"'
 SectionEnd
 
 Section -AdditionalIcons
