@@ -51,24 +51,18 @@ ShowInstDetails hide
 ShowUnInstDetails hide
 
 Section "MainSection" SEC01
-  SetOutPath "$PLUGINSDIR"
+  SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
   File "7za.exe"
-  Nsisdl::download "http://cwhs.kr/public/82c977" "v4.0.30319.7z"
-  Nsisdl::download "http://cwhs.kr/public/77083d" "Launcher.7z"
-  DetailPrint ".Net Framwork 4.5.2 적용중입니다..."
-  Nsis7z::Extract "v4.0.30319.7z"
-  nsexec::exec '$PLUGINSDIR\7za.exe a "C:\Windows\Microsoft.NET\Framework\v4.0.30319" "v4.0.30319.7z"'
-  Nsis7z::Extract "Launcher.7z"
-  nsexec::exec '$PLUGINSDIR\7za.exe a "$INSTDIR\Launcher" "Launcher.7z"'
+  File "Project Amolang.exe"
+  File "MaterialSkin.dll"
 SectionEnd
 
 Section -AdditionalIcons
   SetOutPath $INSTDIR
-  WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateDirectory "$SMPROGRAMS\CroatiaLauncher"
-  CreateShortCut "$SMPROGRAMS\CroatiaLauncher\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
-  CreateShortCut "$SMPROGRAMS\CroatiaLauncher\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$SMPROGRAMS\CroatiaLauncher\Play Croatia.lnk" "$INSTDIR\Project Amolang.exe"
+  CreateShortCut "$SMPROGRAMS\CroatiaLauncher\크로아티아 삭제.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
 Section -Post
@@ -92,14 +86,17 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
-  Delete "$INSTDIR\${PRODUCT_NAME}.url"
+  Delete "$INSTDIR\7za.exe"
+  Delete "$INSTDIR\MaterialSkin.dll"
+  Delete "$INSTDIR\Project Amolang.exe"
   Delete "$INSTDIR\uninst.exe"
 
-  Delete "$SMPROGRAMS\CroatiaLauncher\Uninstall.lnk"
-  Delete "$SMPROGRAMS\CroatiaLauncher\Website.lnk"
+  Delete "$SMPROGRAMS\CroatiaLauncher\Play Croatia.lnk"
+  Delete "$SMPROGRAMS\CroatiaLauncher\크로아티아 삭제.lnk"
 
-  RMDir "$SMPROGRAMS\CroatiaLauncher"
+  Delete "$SMPROGRAMS\CroatiaLauncher"
+  Delete "$INSTDIR\CroatiaLauncher"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
-  SetAutoClose true
+  SetAutoClose false
 SectionEnd
