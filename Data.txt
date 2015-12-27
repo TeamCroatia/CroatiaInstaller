@@ -1,4 +1,4 @@
 #단순 메모용
 
 크로아티아 파일서버 (드롭박스) http://croatiamodpackjavlib.kro.kr
-크로아티아 파일서버 (자바) http://dl.malangbaram.net/modpack.zip
+크로아티아 파일서버 (프요) http://dl.malangbaram.net/modpack.zip
