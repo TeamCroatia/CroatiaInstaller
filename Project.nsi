@@ -56,12 +56,16 @@ Section "MainSection" SEC01
   File "7za.exe"
   File "Project Amolang.exe"
   File "MaterialSkin.dll"
+  MessageBox MB_OK "런처를 구동하기 위한 필수 라이브러리인 닷넷프레임워크를 다운로드합니다. $\n 바탕화면에 바로가기가 추가되어 설치할 수 있습니다."
+  NSISdl::download "https://download.microsoft.com/download/0/6/1/061F001C-8752-4600-A198-53214C69B51F/dotnetfx35setup.exe" "dotnetfx35setup.exe"
 SectionEnd
 
 Section -AdditionalIcons
   SetOutPath $INSTDIR
   CreateDirectory "$SMPROGRAMS\CroatiaLauncher"
   CreateShortCut "$SMPROGRAMS\CroatiaLauncher\Play Croatia.lnk" "$INSTDIR\Project Amolang.exe"
+  CreateShortCut "$DESKTOP\Play Croatia.lnk" "$INSTDIR\Project Amolang.exe"
+  CreateShortCut "$DESKTOP\닷넷프레임워크 설치.lnk" "$INSTDIR\dotnetfx35setup.exe"
   CreateShortCut "$SMPROGRAMS\CroatiaLauncher\크로아티아 삭제.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
@@ -90,6 +94,10 @@ Section Uninstall
   Delete "$INSTDIR\MaterialSkin.dll"
   Delete "$INSTDIR\Project Amolang.exe"
   Delete "$INSTDIR\uninst.exe"
+  Delete "$INSTDIR\dotnetfx35setup.exe"
+  
+  Delete "$DESKTOP\Play Croatia.lnk"
+  Delete "$DESKTOP\닷넷프레임워크 설치.lnk"
 
   Delete "$SMPROGRAMS\CroatiaLauncher\Play Croatia.lnk"
   Delete "$SMPROGRAMS\CroatiaLauncher\크로아티아 삭제.lnk"
