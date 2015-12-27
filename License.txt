@@ -1,5 +1,10 @@
-다음과 같은 항목이 설치됩니다:
-.Net Framework 4.5.2
+다음과 같은 항목이 추가됩니다:
+CroatiaLauncher(설치)
+.Net Framework 4.5.2(추가)
+
+
+CroatiaLauncher가 실행되기 위해서는 .Net Framework 4.5.2가 꼭 필요합니다.
+CroatiaLauncher는 설치되지만, .Net Framework 4.5.2는 따로 추가된 바로가기를 통해 설치하셔야 합니다. 바탕화면에 추가됩니다.
 
 
 

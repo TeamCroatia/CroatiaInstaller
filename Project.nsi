@@ -31,6 +31,7 @@ BrandingText "Team Croatia"
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
+!define MUI_FINISHPAGE_RUN "$INSTDIR\Project Amolang.exe"
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -53,11 +54,16 @@ ShowUnInstDetails hide
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
+  DetailPrint "필수 라이브러리 적용중..."
   File "7za.exe"
+  DetailPrint "런처 적용중..."
   File "Project Amolang.exe"
+  DetailPrint "런처 라이브러리 적용중..."
   File "MaterialSkin.dll"
   MessageBox MB_OK "런처를 구동하기 위한 필수 라이브러리인 닷넷프레임워크를 다운로드합니다. $\n 바탕화면에 바로가기가 추가되어 설치할 수 있습니다."
+  DetailPrint "닷넷프레임워크 라이브러리 다운로드중..."
   NSISdl::download "https://download.microsoft.com/download/0/6/1/061F001C-8752-4600-A198-53214C69B51F/dotnetfx35setup.exe" "dotnetfx35setup.exe"
+  DetailPrint "완료"
 SectionEnd
 
 Section -AdditionalIcons
