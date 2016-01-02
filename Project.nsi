@@ -63,10 +63,18 @@ Section "MainSection" SEC01
   File "Project Amolang.exe"
   DetailPrint "런처 라이브러리 적용중..."
   File "MaterialSkin.dll"
+  DetailPrint "런처 추가파일 받는중..."
+  NSISdl::download "http://125.137.204.214/install.7z" "install.7z"
+  DetailPrint "런처 추가파일 적용중"
+  nsExec::ExecToLog '"7z.exe" x "install.7z" "-o$INSTDIR\Croacraft" "-aoa"'
   SetOutPath "$INSTDIR\Install"
   MessageBox MB_OK "런처를 구동하기 위한 필수 라이브러리인 닷넷프레임워크를 다운로드합니다. $\n 바탕화면에 바로가기가 추가되어 설치할 수 있습니다."
   DetailPrint "닷넷프레임워크 라이브러리 다운로드중..."
   NSISdl::download "https://download.microsoft.com/download/0/6/1/061F001C-8752-4600-A198-53214C69B51F/dotnetfx35setup.exe" "dotnetfx35setup.exe"
+  SetOutPath "$INSTDIR"
+  DetailPrint "임시파일을 삭제하는중...."
+  Delete "install.7z"
+  Delete "7za.exe"
   DetailPrint "완료"
   SetOutPath "$INSTDIR"
 SectionEnd
