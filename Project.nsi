@@ -7,9 +7,9 @@ SetCompressor lzma
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
+!include "LogicLib.nsh"
 
 ; MUI Settings
-Setfont "나눔고딕" 10
 !define MUI_ABORTWARNING
 !define MUI_ICON "icon.ico"
 BrandingText "Team Croatia"
@@ -23,6 +23,8 @@ BrandingText "Team Croatia"
 !insertmacro MUI_PAGE_LICENSE "License.txt"
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
+; Install Setting page
+Page Custom Form
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
@@ -36,22 +38,61 @@ BrandingText "Team Croatia"
 
 ; MUI end ------
 
+Var 'bckset'
+Var 'inset'
+
+ReserveFile "Form.ini"
+!insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
+
+Function .onInit
+!insertmacro MUI_INSTALLOPTIONS_EXTRACT "Form.ini"
+FunctionEnd
+
+Function Form
+!insertmacro MUI_INSTALLOPTIONS_DISPLAY_RETURN "Form.ini"
+FunctionEnd
+
+
 Name "크로아티아 개발자용 임시 간편설치기"
 OutFile "크로아티아 개발자용 임시 간편설치기.exe"
 InstallDir "$APPDATA\.minecraft"
 ShowInstDetails show
 
+  SetOverwrite ifnewer
+
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR\Temp"
-  File "killmc.cmd"
+  File "javakill.exe"
   DetailPrint "다음 프로세스를 정지합니다: Javaw.exe"
-  nsExec::Exec "killmc.cmd"
+  nsExec::Exec "javakill.exe"
+  goto Step1
+Step1:
+!insertmacro MUI_INSTALLOPTIONS_READ "$bckset" "Form.ini" "Field 3" "State"
+StrCmp $bckset "1" CheckA1 CheckA2
+CheckA1:
+  SetOutPath "$INSTDIR\Temp"
+  DetailPrint "마인크래프트 백업 시작..."
+  DetailPrint "마인크래프트 유저 데이터에따라 몇분이 소모될 수 있습니다."
+  DetailPrint "기존 호박고구마 제작 패치 스크립트를 통해 백업을 진행한 경우, 해당 백업파일은 지워집"
+  DetailPrint "니다."
+  File cpymc.cmd
+  nsExec::Exec "cpymc.cmd"
+  RMDir /r "$APPDATA\.MCBackup\Temp"
+  DetailPrint "마인크래프트 백업 완료..."
+CheckA2:
+  goto Step2
+Step2:
+!insertmacro MUI_INSTALLOPTIONS_READ "$inset" "Form.ini" "Field 2" "State"
+StrCmp $inset "1" CheckB1 CheckB2
+CheckB1:
   SetOutPath "$INSTDIR"
-  Messagebox MB_OK "마인크래프트가 완전히 초기화됩니다. 필요하신파일은 미리 백업해주세요. "
-  SetOverwrite ifnewer
   DetailPrint "마인크래프트 완전 초기화 시작..."
   RMDir /r "$INSTDIR"
   DetailPrint "마인크래프트 완전 초기화 완료."
+  goto Step3
+CheckB2:
+  goto Step3
+Step3:
   SetOutPath "$INSTDIR\Temp"
   DetailPrint "파일 다운로드중... (1/30)"
   Nsisdl::download "http://hoparkgo9ma.tistory.com/attachment/cfile22.uf@252BF13F56B6F7A42C9CE1.001" "GameLib.7z.001"
@@ -116,17 +157,16 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   DetailPrint "모드 적용중..."
   File "7za.exe"
-  File "Extract.cmd"
-  nsExec::Exec "Extract.cmd"
-  File "이용허락.txt"
+  File "Extract.exe"
+  nsExec::Exec "Extract.exe"
+  File "팀 크로아티아 이용허락.txt"
   DetailPrint "임시파일을 삭제하는중...."
   RMDir /r "$INSTDIR\Temp"
-  Delete "killmc.cmd"
   Delete "7za.exe"
-  Delete "Extract.cmd"
+  Delete "Extract.exe"
   DetailPrint "완료"
   SetOutPath "$INSTDIR\CroatiaInformation"
-  File "패치완료!.txt"
+  File "Done.txt"
   File "instend.cmd"
   nsExec::Exec "instend.cmd"
   SetOutPath "$INSTDIR"
