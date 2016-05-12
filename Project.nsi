@@ -62,9 +62,9 @@ ShowInstDetails show
 
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR\Temp"
-  File "javakill.exe"
+  File "javakill.cmd"
   DetailPrint "다음 프로세스를 정지합니다: Javaw.exe"
-  nsExec::Exec "javakill.exe"
+  nsExec::Exec "javakill.cmd"
   goto Step1
 Step1:
 !insertmacro MUI_INSTALLOPTIONS_READ "$bckset" "Form.ini" "Field 3" "State"
@@ -75,7 +75,7 @@ CheckA1:
   DetailPrint "마인크래프트 유저 데이터에따라 몇분이 소모될 수 있습니다."
   DetailPrint "기존 호박고구마 제작 패치 스크립트를 통해 백업을 진행한 경우, 해당 백업파일은 지워집"
   DetailPrint "니다."
-  File cpymc.cmd
+  File "cpymc.cmd"
   nsExec::Exec "cpymc.cmd"
   RMDir /r "$APPDATA\.MCBackup\Temp"
   DetailPrint "마인크래프트 백업 완료..."
@@ -157,8 +157,8 @@ Step3:
   SetOutPath "$INSTDIR"
   DetailPrint "모드 적용중..."
   File "7za.exe"
-  File "Extract.exe"
-  nsExec::Exec "Extract.exe"
+  File "Extract.cmd"
+  nsExec::Exec "Extract.cmd"
   File "팀 크로아티아 이용허락.txt"
   DetailPrint "임시파일을 삭제하는중...."
   RMDir /r "$INSTDIR\Temp"
