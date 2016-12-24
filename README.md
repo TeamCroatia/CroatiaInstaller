@@ -1,3 +1,1 @@
-Developer Installer README
-===========
-본 프로젝트파일은 마인크래프트 간편설치기를 제작하는데 매우 "유용한"코드들이 많이 들어있습니다. 본 코드를 기반/참고하여 설치기를 제작할때 제에에에에에ㅔ에에에에발 불펌해가지 말고 [팀의 라이선스](https://github.com/TeamCroatia/CroatiaPublicLicense/blob/master/Team%20Croatia%20Public%20License.md)또는 [호박고구마 라이선스](https://github.com/kpjhg0124/PublicLicense/blob/master/PublicLicense.md)를 따라 설치기 안에 "Base Code by Team Croatia" 또는 "Base Code by hoparkgo9ma"를 입력해 **출처를 명시해주십시오.** 출처 비명시시 저작권 법에 의거 처벌받을 수 있습니다.
+뷁
